@@ -1,20 +1,229 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const base = import.meta.env.BASE_URL;
 ---
 
-<Layout title="COMP4020 prototype">
-  <header>
-    <nav aria-label="Primary">
-      <a href="./">Home</a>
+<Layout
+  title="The Missing Night | An interactive light-pollution explainer"
+  description="Turn up the city and watch the faint night disappear in this interactive explanation of skyglow."
+>
+  <a class="skip-link" href="#light-pollution">Skip to the sky control</a>
+
+  <header class="site-header">
+    <nav aria-label="Primary navigation">
+      <a class="wordmark" href="#top" aria-label="The Missing Night home">
+        <span class="wordmark-mark" aria-hidden="true"></span>
+        <span>The Missing Night</span>
+      </a>
+      <div class="nav-links">
+        <a href="#mechanism">Mechanism</a>
+        <a href="#method">Method & sources</a>
+      </div>
     </nav>
   </header>
-  <main>
-    <h1>COMP4020 prototype</h1>
-    <p data-testid="intro">
-      Replace this with your prototype. This week's brief is on the course
-      website; <code>spec/README.md</code> explains how the checks in this repo
-      relate to it.
-    </p>
+
+  <main id="top">
+    <section
+      class="experience"
+      id="sky-scene"
+      data-testid="sky-scene"
+      data-bortle="4"
+      aria-labelledby="page-title"
+    >
+      <img
+        class="landscape"
+        src={`${base}images/canberra-horizon.jpg`}
+        alt=""
+        aria-hidden="true"
+      />
+      <div class="sky-base" aria-hidden="true"></div>
+      <canvas id="star-canvas" aria-hidden="true"></canvas>
+      <div class="skyglow" aria-hidden="true"></div>
+      <div class="ground-lift" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <p class="eyebrow">Interactive field note / Canberra</p>
+        <h1 id="page-title">
+          What did the<br />
+          <em>city erase?</em>
+        </h1>
+        <p class="hero-intro">
+          Turn up artificial light. Watch the universe lose the contrast
+          contest.
+        </p>
+      </div>
+
+      <div class="control-dock">
+        <div class="control-panel">
+          <div class="control-heading">
+            <label for="light-pollution">Light pollution</label>
+            <p id="scale-help">Bortle 1 is darkest. Bortle 9 is brightest.</p>
+          </div>
+
+          <input
+            id="light-pollution"
+            data-testid="sky-control"
+            type="range"
+            min="1"
+            max="9"
+            step="1"
+            value="4"
+            aria-describedby="scale-help"
+            aria-controls="sky-scene sky-status"
+          />
+
+          <div class="scale" aria-hidden="true">
+            <span class="scale-tick scale-tick-key"><b>1</b><small>Dark</small></span>
+            <span class="scale-tick"><b>2</b></span>
+            <span class="scale-tick"><b>3</b></span>
+            <span class="scale-tick"><b>4</b></span>
+            <span class="scale-tick scale-tick-key"><b>5</b><small>Suburban</small></span>
+            <span class="scale-tick"><b>6</b></span>
+            <span class="scale-tick"><b>7</b></span>
+            <span class="scale-tick"><b>8</b></span>
+            <span class="scale-tick scale-tick-key"><b>9</b><small>Bright</small></span>
+          </div>
+        </div>
+
+        <div
+          class="sky-status"
+          id="sky-status"
+          data-testid="sky-status"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <div class="status-index">
+            <span>Class</span>
+            <strong id="state-level">4</strong>
+            <span>/ 9</span>
+          </div>
+          <div class="status-copy">
+            <p id="state-context">Canberra outskirts</p>
+            <h2 id="state-name" data-testid="state-name">
+              Rural-suburban transition
+            </h2>
+            <p id="state-observation" data-testid="state-observation">
+              The Milky Way softens. Familiar constellations remain, while the
+              quiet background stars begin to go.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mechanism" id="mechanism" aria-labelledby="mechanism-title">
+      <div class="section-heading">
+        <p class="eyebrow">The mechanism</p>
+        <h2 id="mechanism-title">
+          The stars do not switch off.<br />The background switches on.
+        </h2>
+      </div>
+
+      <div class="mechanism-grid">
+        <p class="mechanism-lead">
+          Light sent upward, or reflected from the ground, scatters through the
+          atmosphere. That scattered light becomes <strong>skyglow</strong>.
+          It raises the brightness behind every star until the faintest signals
+          no longer stand apart.
+        </p>
+
+        <ol class="light-path" aria-label="How skyglow hides faint stars">
+          <li>
+            <span class="light-path-index">01</span>
+            <strong class="light-path-title">Misplaced light</strong>
+            <p class="light-path-copy">Outdoor light escapes above the horizon.</p>
+          </li>
+          <li>
+            <span class="light-path-index">02</span>
+            <strong class="light-path-title">Atmospheric scatter</strong>
+            <p class="light-path-copy">
+              Particles redirect some of it back toward our eyes.
+            </p>
+          </li>
+          <li>
+            <span class="light-path-index">03</span>
+            <strong class="light-path-title">Lost contrast</strong>
+            <p class="light-path-copy">
+              Faint stars blend into a brighter background.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="statement" aria-labelledby="statement-title">
+      <p class="eyebrow">A design choice, not a fact of city life</p>
+      <h2 id="statement-title">
+        Natural darkness has value like clean air, water and soil.
+      </h2>
+      <p class="statement-copy">
+        Better lighting is useful, targeted, low, controlled and warm. The loss
+        above is designed, which means some of it can be designed back out.
+      </p>
+      <div class="statement-action">
+        <a
+          href="https://www.dcceew.gov.au/campaign/light-pollution"
+          target="_blank"
+          rel="noreferrer"
+        >See Australia's six lighting principles</a>
+      </div>
+    </section>
+
+    <section class="method" id="method" aria-labelledby="method-title">
+      <div>
+        <p class="eyebrow">Method & sources</p>
+        <h2 id="method-title">A comparison, not a prediction.</h2>
+      </div>
+      <div class="method-copy">
+        <p class="method-paragraph">
+          This is an <strong>illustrative simulation</strong>, not a measured
+          view from a particular Canberra address. The nine positions follow
+          the observational language of the Bortle Dark-Sky Scale. The changing
+          star field makes its central contrast visible; it does not claim an
+          exact star count.
+        </p>
+        <p class="method-paragraph">
+          Ground image generated for this student prototype. The star field and
+          skyglow are rendered in the browser so the same scene can respond to
+          the control.
+        </p>
+      </div>
+      <ul class="source-list" aria-label="Sources">
+        <li class="source-item">
+          <a
+            data-testid="source-link"
+            href="https://skyandtelescope.org/stargazing-and-observing/how-dark-is-your-night-sky/"
+            target="_blank"
+            rel="noreferrer"
+          >Sky & Telescope / Bortle scale</a>
+        </li>
+        <li class="source-item">
+          <a
+            data-testid="source-link"
+            href="https://darksky.org/resources/what-is-light-pollution/"
+            target="_blank"
+            rel="noreferrer"
+          >DarkSky / What is light pollution?</a>
+        </li>
+        <li class="source-item">
+          <a
+            data-testid="source-link"
+            href="https://www.dcceew.gov.au/environment/biodiversity/publications/national-light-pollution-guidelines-wildlife"
+            target="_blank"
+            rel="noreferrer"
+          >Australian Government / National guidelines</a>
+        </li>
+      </ul>
+    </section>
   </main>
+
+  <footer>
+    <p class="footer-brand">The Missing Night</p>
+    <p class="footer-note">Independent student work for ANU COMP4020.</p>
+    <a class="footer-back" href="#top">Back to sky</a>
+  </footer>
+
   <script src="../scripts/main.ts"></script>
 </Layout>

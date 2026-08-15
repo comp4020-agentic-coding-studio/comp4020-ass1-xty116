@@ -1,85 +1,57 @@
 # Process overview
 
-<!-- TEMPLATE: this file is a shape to fill in, not a form. Replace everything
-     in it with your own overview, and delete this comment — `pnpm
-     check:evidence` will remind you if it's still here. -->
-
-A reading-guide to how the work came together --- a map to your process, not an
-essay about it. Markers read this file and follow its citations; they don't
-trawl the repo for evidence you didn't point at, so if a moment mattered, cite
-it.
-
-This file is the shape; the course site's
-[assessment page](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#what-you-submit)
-is the requirement, and its
-[word counts](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#word-counts)
-cover every deliverable.
-
 ## What I built
 
-One paragraph: the thing, and the idea behind it.
+I built *The Missing Night*, an interactive explanation of how artificial
+skyglow removes our view of faint stars. The visitor moves one native range
+control through the nine Bortle classes. A deterministic canvas star field,
+the horizon glow and a plain-language observation change together. My point of
+view is that city darkness is not empty or obsolete: it is an environmental
+quality that lighting design can preserve. I kept the page static and the
+visual explicitly illustrative, because pretending to predict the sky above a
+specific Canberra address would undermine that argument.
 
 ## The moments that mattered
 
-Three or four for an assignment; fewer is fine for a weekly prototype. Keep the
-list short so each moment has room to do all four jobs:
+### 1. Making the constraint visible before making the page
 
-1. **what happened** --- the problem, or the thing the agent got wrong
-2. **what you did instead of the obvious thing** --- the call you made, and why
-   it beat the obvious one
-3. **how you knew it was right** --- the check you ran, the viewport you looked
-   at, what you read before accepting the diff
-4. **the citation** --- a commit or commit range, a `CLAUDE.md` change, a check
-   that went from red to green, a prompt paired with the commit it produced
+The obvious response to an open explainer brief was to assemble several facts,
+charts and interactions about light pollution. I instead treated “one strong
+idea, and nothing else” as a testable limit. I carried forward rules about
+grounding astronomy claims, keyboard operation and both marking viewports, then
+replaced the starter test with a deliberately red contract: exactly one 1–9
+range, nine ordered sky states, less visible starlight as the level rises,
+non-colour status text and transparent sourcing. This made scope rejection part
+of the harness rather than a late editing preference. The baseline failed
+because the state model did not yet exist, then the same roster passed 20 tests
+after implementation
+([`0625870...6d15225`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/compare/0625870...6d15225)).
 
-Jobs 2 and 3 are the ones the repo can't tell a reader on its own, so they're
-where the marks are. The strongest moments are the ones where a correction
-landed in the **harness** rather than in another prompt --- a rule added to
-`CLAUDE.md`, a check wired up, an attempt thrown away: re-prompting until it
-passes is the routine case, and changing what the agent works against is the
-skilled one.
+### 2. Refusing a fixed “before and after” image
 
-Cite each moment as a link whose text is the commit hash or range and whose
-target is this repo's commit or compare URL, so a reader clicks straight to the
-evidence:
+A fixed dark-sky photograph with a coloured overlay looked plausible, but its
+stars could not actually disappear; the interaction would have been decorative.
+I generated only the Canberra-like ground and horizon, deliberately asking for
+an empty sky. The browser now draws a seeded field of ordinary stars and a
+denser Milky Way band, filtering both from the same state object that supplies
+the written observation. That choice kept the visual, semantic status and test
+contract on one source of truth. I verified it through the full build, lint and
+test roster, then compared Class 4 and Class 9 in the rendered browser at both
+marking widths. The contrast changed while the 186 KB ground asset stayed
+constant
+([`bf2923a`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/bf2923a)).
 
-- one commit: [`a1b2c3d`](https://github.com/YOUR-ORG/YOUR-REPO/commit/a1b2c3d)
-- a range:
-  [`a1b2c3d...e4f5a6b`](https://github.com/YOUR-ORG/YOUR-REPO/compare/a1b2c3d...e4f5a6b)
+### 3. Turning a resize failure into a permanent rule
 
-To pair a prompt with the commit it produced, quote the prompt (curated, not a
-full transcript) next to the citation:
-
-> the prompt, verbatim
-
-Screenshots are welcome where one carries the verification better than a
-sentence does. Commit the file to this repo and link it with a **relative**
-path, which is what makes it render on GitHub: `![alt text](docs/before.png)`.
-Images don't count towards the word count and don't replace the citation.
-
-### A worked moment, for shape
-
-Delete this section along with the rest of the boilerplate --- it's here to show
-the four jobs in one paragraph, not to be imitated in content.
-
-> The date formatter kept coming back with `toLocaleDateString()` and no locale
-> argument, so the same build rendered differently on my machine and in CI. I'd
-> already re-prompted it twice, which fixed the line but not the habit, so the
-> third time I put the rule in `CLAUDE.md` instead
-> ([`3f9ac21`](https://github.com/YOUR-ORG/YOUR-REPO/commit/3f9ac21)) and added
-> a spec test that fails on a bare `toLocaleDateString`. That's what told me it
-> had actually taken: the test went red against the old code and green against
-> the new, and the next two features it wrote passed it without prompting
-> ([`3f9ac21...b7e0d14`](https://github.com/YOUR-ORG/YOUR-REPO/compare/3f9ac21...b7e0d14)).
-
-## Before you ship
-
-`pnpm check:evidence` verifies your citations resolve to real commits, that the
-current reflection entry is in `reflections/`, and that your `CLAUDE.md` is
-there --- before a marker ever opens the file. It checks that your map is
-traceable, not that it is good: the marker judges whether your small,
-deliberately chosen set of moments shows real judgement and reflection. A green
-check is not a substitute for that curation.
-
-Images are deliberately not checked, because whether one renders is visible the
-moment you look. Open this file on GitHub and look at it before you ship.
+The first desktop screenshot looked correct, and the page had no horizontal
+overflow. The stronger check was to focus the range, set it to Class 9, and
+resize from 1920 x 1080 to 390 x 844 without resetting. The state survived, but
+the focused control caused the supposedly hidden scene to scroll internally by
+460 pixels, pushing the title behind the navigation. Inspecting element bounds
+showed that an absolute glow layer extended beyond the scene, so `overflow:
+hidden` had still created a programmatically scrollable container. I bounded
+the layer, changed the scene to `overflow: clip`, and added a `CLAUDE.md` rule
+requiring `scrollHeight === clientHeight` during focused resize checks. The
+retest held Class 9, returned internal scroll to zero, kept the title visible
+and produced no console warnings
+([`30ce249`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/30ce249)).

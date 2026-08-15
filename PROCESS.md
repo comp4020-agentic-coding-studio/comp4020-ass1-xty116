@@ -34,12 +34,13 @@ stars could not actually disappear; the interaction would have been decorative.
 I generated only the Canberra-like ground and horizon, deliberately asking for
 an empty sky. The browser now draws a seeded field of ordinary stars and a
 denser Milky Way band, filtering both from the same state object that supplies
-the written observation. That choice kept the visual, semantic status and test
-contract on one source of truth. I verified it through the full build, lint and
-test roster, then compared Class 4 and Class 9 in the rendered browser at both
-marking widths. The contrast changed while the 186 KB ground asset stayed
-constant
-([`bf2923a`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/bf2923a)).
+the written observation. That kept the visual, semantic status and test
+contract on one source of truth. A later depth pass added layered haze, a dust
+lane and star-specific halos without changing the mechanic. Class 4/9
+comparisons at both marking widths changed the sky while the 186 KB ground
+asset stayed constant
+([`bf2923a`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/bf2923a),
+[`94a7195`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/94a7195)).
 
 ### 3. Turning a resize failure into a permanent rule
 

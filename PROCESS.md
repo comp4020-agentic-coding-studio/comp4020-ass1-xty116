@@ -55,3 +55,15 @@ requiring `scrollHeight === clientHeight` during focused resize checks. The
 retest held Class 9, returned internal scroll to zero, kept the title visible
 and produced no console warnings
 ([`30ce249`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/30ce249)).
+
+### 4. Letting the deployment environment overrule the local preview
+
+The ground image appeared locally, but the CI-equivalent link
+crawler found that the built URL joined `BASE_URL` and `images` without a
+slash. This would 404 under the GitHub Pages repository path. I fixed the join,
+then did more than retry: I added a built-output test
+for the exact public asset path and a harness rule requiring every preview to
+be crawled under the repository base. The full roster increased to 21 passing
+tests, and linkinator scanned all six links successfully. This was the check
+that separated a convincing local artefact from a deployable one
+([`90adcca`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/90adcca)).

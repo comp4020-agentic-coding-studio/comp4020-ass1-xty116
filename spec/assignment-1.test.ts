@@ -55,4 +55,11 @@ describe("assignment 1: one interaction explains the missing night", () => {
     expect(sourceLinks.length).toBeGreaterThanOrEqual(2);
     expect(sourceLinks.every((link) => link.getAttribute("href")?.startsWith("https://"))).toBe(true);
   });
+
+  it("serves the landscape from the GitHub Pages base path", () => {
+    const landscape = doc.querySelector(".landscape");
+    expect(landscape?.getAttribute("src")).toBe(
+      "/comp4020-ass1-xty116/images/canberra-horizon.jpg",
+    );
+  });
 });

@@ -13,6 +13,7 @@
   --signal: #ffbf57;
   --coral: #ff695d;
   --mint: #78d9c7;
+  --ice: #b8dcff;
 }
 
 * {
@@ -72,6 +73,7 @@ input:focus-visible {
   right: 0;
   left: 0;
   border-bottom: 1px solid rgb(255 255 255 / 18%);
+  background: linear-gradient(to bottom, rgb(2 8 15 / 72%), rgb(2 8 15 / 0%));
 }
 
 .site-header nav {
@@ -98,7 +100,10 @@ input:focus-visible {
   height: 1rem;
   border: 2px solid var(--mint);
   border-radius: 50%;
-  box-shadow: 0 0 0 3px rgb(120 217 199 / 14%);
+  box-shadow:
+    inset -0.28rem 0 0 #07111d,
+    0 0 0 3px rgb(120 217 199 / 14%),
+    0 0 1.4rem rgb(120 217 199 / 20%);
 }
 
 .nav-links {
@@ -123,10 +128,22 @@ input:focus-visible {
   min-height: max(49rem, 100svh);
   grid-template-rows: 1fr auto;
   overflow: clip;
-  background: #07111d;
+  background: #030a14;
 
   --sky-glow: 0.2;
   --ground-lift: 0.09;
+}
+
+.experience::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgb(2 8 15 / 62%), rgb(2 8 15 / 8%) 48%, transparent 72%),
+    linear-gradient(to bottom, transparent 52%, rgb(2 7 12 / 34%) 72%, rgb(2 7 12 / 68%));
+  box-shadow: inset 0 0 9rem rgb(0 4 10 / 48%);
+  content: "";
+  pointer-events: none;
 }
 
 .landscape,
@@ -145,17 +162,20 @@ input:focus-visible {
   z-index: -4;
   object-fit: cover;
   object-position: center bottom;
-  filter: brightness(calc(0.82 + var(--ground-lift) * 0.55)) saturate(0.9);
+  filter: brightness(calc(0.96 + var(--ground-lift) * 0.48)) contrast(1.08)
+    saturate(1.08);
 }
 
 .sky-base {
   z-index: -3;
-  background: linear-gradient(
-    to bottom,
-    rgb(2 10 19 / 32%),
-    rgb(4 15 26 / 8%) 58%,
-    rgb(2 6 10 / 0%) 75%
-  );
+  background:
+    linear-gradient(to right, rgb(2 10 19 / 24%), transparent 44%, rgb(9 20 30 / 10%)),
+    linear-gradient(
+      to bottom,
+      rgb(2 10 19 / 18%),
+      rgb(4 15 26 / 4%) 58%,
+      rgb(2 6 10 / 0%) 75%
+    );
 }
 
 #star-canvas {
@@ -166,17 +186,17 @@ input:focus-visible {
   z-index: -1;
   background:
     radial-gradient(
-      ellipse 95% 52% at 58% 76%,
-      rgb(255 159 63 / calc(var(--sky-glow) * 58%)),
-      rgb(112 138 159 / calc(var(--sky-glow) * 32%)) 36%,
-      rgb(28 57 82 / calc(var(--sky-glow) * 14%)) 62%,
+      ellipse 110% 46% at 62% 79%,
+      rgb(255 142 77 / calc(var(--sky-glow) * 62%)),
+      rgb(255 191 92 / calc(var(--sky-glow) * 28%)) 27%,
+      rgb(92 150 164 / calc(var(--sky-glow) * 22%)) 51%,
       transparent 82%
     ),
     linear-gradient(
       to bottom,
       transparent 8%,
-      rgb(90 117 139 / calc(var(--sky-glow) * 28%)) 72%,
-      rgb(255 157 62 / calc(var(--sky-glow) * 35%)) 100%
+      rgb(90 143 153 / calc(var(--sky-glow) * 22%)) 70%,
+      rgb(255 143 73 / calc(var(--sky-glow) * 42%)) 100%
     );
   mix-blend-mode: screen;
 }
@@ -190,10 +210,12 @@ input:focus-visible {
 }
 
 .hero-copy {
+  position: relative;
+  z-index: 1;
   align-self: end;
   width: min(100% - 3rem, 118rem);
   margin: 8.5rem auto 2.5rem;
-  padding-bottom: 2rem;
+  padding-bottom: 2.4rem;
 }
 
 .eyebrow {
@@ -208,15 +230,19 @@ input:focus-visible {
   max-width: 75rem;
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 7.4rem;
+  font-size: 7.8rem;
   font-weight: 400;
   line-height: 0.87;
   text-wrap: balance;
+  text-shadow: 0 0.3rem 2.8rem rgb(0 4 10 / 46%);
 }
 
 .hero-copy h1 em {
   color: var(--signal);
   font-weight: 400;
+  text-shadow:
+    0 0 2.4rem rgb(255 191 87 / 18%),
+    0 0.3rem 2.8rem rgb(0 4 10 / 46%);
 }
 
 .hero-intro {
@@ -225,21 +251,38 @@ input:focus-visible {
   color: #e5e4de;
   font-size: 1.22rem;
   font-weight: 520;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--mint);
+  text-shadow: 0 0.15rem 1.2rem rgb(0 4 10 / 70%);
 }
 
 .control-dock {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(24rem, 0.9fr);
   width: 100%;
   border-top: 1px solid rgb(255 255 255 / 24%);
-  background: rgb(4 10 16 / 88%);
-  backdrop-filter: blur(18px);
+  background: rgb(3 9 15 / 76%);
+  box-shadow: 0 -1.5rem 4rem rgb(0 4 10 / 30%);
+  backdrop-filter: blur(24px) saturate(1.18);
+}
+
+.control-dock::before {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--mint), var(--ice) 38%, var(--signal) 72%, var(--coral));
+  content: "";
+  opacity: 0.78;
 }
 
 .control-panel,
 .sky-status {
   min-width: 0;
-  padding: 1.45rem max(1.5rem, calc((100vw - 118rem) / 2 + 1.5rem)) 1.6rem;
+  padding: 1.65rem max(1.5rem, calc((100vw - 118rem) / 2 + 1.5rem)) 1.8rem;
 }
 
 .control-panel {
@@ -268,7 +311,7 @@ input:focus-visible {
 #light-pollution {
   display: block;
   width: 100%;
-  height: 2.2rem;
+  height: 2.6rem;
   margin: 0;
   appearance: none;
   cursor: ew-resize;
@@ -278,44 +321,52 @@ input:focus-visible {
 }
 
 #light-pollution::-webkit-slider-runnable-track {
-  height: 0.42rem;
+  height: 0.5rem;
   border-radius: 0;
   background: linear-gradient(
     to right,
-    var(--mint) 0 var(--range-position),
+    var(--mint) 0%,
+    var(--signal) var(--range-position),
     rgb(255 255 255 / 25%) var(--range-position) 100%
   );
+  box-shadow: 0 0 1.2rem rgb(120 217 199 / 14%);
 }
 
 #light-pollution::-moz-range-track {
-  height: 0.42rem;
+  height: 0.5rem;
   border-radius: 0;
   background: rgb(255 255 255 / 25%);
 }
 
 #light-pollution::-moz-range-progress {
-  height: 0.42rem;
-  background: var(--mint);
+  height: 0.5rem;
+  background: linear-gradient(to right, var(--mint), var(--signal));
 }
 
 #light-pollution::-webkit-slider-thumb {
-  width: 1.55rem;
-  height: 1.55rem;
-  margin-top: -0.57rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: -0.62rem;
   appearance: none;
   border: 0.28rem solid #07111d;
   border-radius: 50%;
   background: var(--signal);
-  box-shadow: 0 0 0 2px var(--signal);
+  box-shadow:
+    0 0 0 2px var(--signal),
+    0 0 0 7px rgb(255 191 87 / 13%),
+    0 0 1.6rem rgb(255 191 87 / 44%);
 }
 
 #light-pollution::-moz-range-thumb {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1.2rem;
+  height: 1.2rem;
   border: 0.28rem solid #07111d;
   border-radius: 50%;
   background: var(--signal);
-  box-shadow: 0 0 0 2px var(--signal);
+  box-shadow:
+    0 0 0 2px var(--signal),
+    0 0 0 7px rgb(255 191 87 / 13%),
+    0 0 1.6rem rgb(255 191 87 / 44%);
 }
 
 .scale {
@@ -368,6 +419,7 @@ input:focus-visible {
   gap: 1.35rem;
   align-items: center;
   border-left: 1px solid rgb(255 255 255 / 20%);
+  background: rgb(7 15 20 / 38%);
   padding-left: 2rem;
 }
 
@@ -388,7 +440,7 @@ input:focus-visible {
 .status-index strong {
   color: var(--signal);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 3.2rem;
+  font-size: 3.65rem;
   font-weight: 400;
   line-height: 1;
 }
@@ -407,7 +459,7 @@ input:focus-visible {
 .status-copy h2 {
   margin: 0.15rem 0 0.2rem;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.45rem;
+  font-size: 1.62rem;
   font-weight: 400;
   line-height: 1.1;
 }
@@ -472,13 +524,37 @@ input:focus-visible {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0;
   padding: 0;
+  border-top: 1px solid rgb(22 25 20 / 30%);
   list-style: none;
 }
 
 .light-path li {
+  position: relative;
   min-height: 13rem;
   padding: 0 1.5rem 1rem;
   border-left: 1px solid rgb(22 25 20 / 30%);
+}
+
+.light-path li::before {
+  position: absolute;
+  top: -2px;
+  left: 1.5rem;
+  width: 3.2rem;
+  height: 3px;
+  background: var(--mint);
+  content: "";
+}
+
+.light-path li:first-child::before {
+  left: 0;
+}
+
+.light-path li:nth-child(2)::before {
+  background: var(--signal);
+}
+
+.light-path li:nth-child(3)::before {
+  background: var(--coral);
 }
 
 .light-path li:first-child {
@@ -492,10 +568,12 @@ input:focus-visible {
 }
 
 .light-path-index {
-  margin-bottom: 4rem;
+  margin-bottom: 2.8rem;
   color: #8c4a1d;
-  font-size: 0.72rem;
-  font-weight: 780;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.35rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .light-path-title {
@@ -516,7 +594,7 @@ input:focus-visible {
   gap: 3rem;
   align-items: start;
   padding: 6.5rem max(1.5rem, calc((100vw - 118rem) / 2 + 1.5rem));
-  background: var(--signal);
+  background: linear-gradient(112deg, var(--signal) 0%, #ffc66a 62%, var(--coral) 140%);
   color: #1d1a13;
 }
 
@@ -540,7 +618,8 @@ input:focus-visible {
   grid-template-columns: minmax(15rem, 0.55fr) minmax(20rem, 0.75fr) minmax(17rem, 0.7fr);
   gap: 5rem;
   padding: 7rem max(1.5rem, calc((100vw - 118rem) / 2 + 1.5rem));
-  background: #17221e;
+  border-top: 1px solid rgb(120 217 199 / 34%);
+  background: #10201e;
 }
 
 .method h2 {
@@ -600,7 +679,7 @@ footer {
 
 @media (width <= 960px) {
   .hero-copy h1 {
-    font-size: 5.2rem;
+    font-size: 5.4rem;
   }
 
   .control-dock {
@@ -673,7 +752,7 @@ footer {
   }
 
   .hero-copy h1 {
-    font-size: 3.55rem;
+    font-size: 3.65rem;
     line-height: 0.91;
   }
 
@@ -681,6 +760,7 @@ footer {
     max-width: 20rem;
     margin-top: 1.1rem;
     font-size: 1rem;
+    padding-left: 0.8rem;
   }
 
   .control-panel {
@@ -756,8 +836,15 @@ footer {
     border-left: 0;
   }
 
+  .light-path li::before,
+  .light-path li:first-child::before {
+    top: -2px;
+    left: 0;
+  }
+
   .light-path-index {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.8rem;
   }
 
   .statement,

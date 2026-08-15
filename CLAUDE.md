@@ -176,3 +176,6 @@ says about the developer you're becoming.
   resize while the interaction has non-default state, before accepting it.
 - Keep the primary interaction operable with a keyboard, and make its changing
   state available to assistive technology rather than relying on colour alone.
+- A week-specific contract test may be committed red once as an intentional
+  baseline before implementation. Every implementation commit after that must
+  return the full check roster to green.

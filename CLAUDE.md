@@ -179,3 +179,6 @@ says about the developer you're becoming.
 - A week-specific contract test may be committed red once as an intentional
   baseline before implementation. Every implementation commit after that must
   return the full check roster to green.
+- Decorative absolute layers must not enlarge an interactive scene's
+  `scrollHeight`. Focus the control, resize desktop to phone, and confirm the
+  scene cannot internally scroll while its non-default state remains intact.

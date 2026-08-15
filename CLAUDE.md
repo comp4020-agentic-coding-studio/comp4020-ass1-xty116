@@ -166,3 +166,13 @@ catching you out, a fact about the stack the agent keeps getting wrong --- write
 it down here. Growing this file is the work of harness engineering, and the gap
 between this boilerplate and your own version is part of what your prototype
 says about the developer you're becoming.
+
+## Carried workflow constraints
+
+- Ground astronomy and light-pollution claims in named, credible sources. Do
+  not invent thresholds or present an illustrative visual as measured data.
+- Keep the prototype static and compatible with its GitHub Pages base path.
+- Verify the rendered interaction at 1920 x 1080 and 390 x 844, including a
+  resize while the interaction has non-default state, before accepting it.
+- Keep the primary interaction operable with a keyboard, and make its changing
+  state available to assistive technology rather than relying on colour alone.

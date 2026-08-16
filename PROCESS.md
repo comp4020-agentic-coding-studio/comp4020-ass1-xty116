@@ -59,12 +59,13 @@ and produced no console warnings
 
 ### 4. Letting the deployment environment overrule the local preview
 
-The ground image appeared locally, but the CI-equivalent link
-crawler found that the built URL joined `BASE_URL` and `images` without a
-slash. This would 404 under the GitHub Pages repository path. I fixed the join,
-then did more than retry: I added a built-output test
-for the exact public asset path and a harness rule requiring every preview to
-be crawled under the repository base. The full roster increased to 21 passing
-tests, and linkinator scanned all six links successfully. This was the check
-that separated a convincing local artefact from a deployable one
-([`90adcca`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/90adcca)).
+The ground image appeared locally, but the CI-equivalent crawler found that
+`BASE_URL` joined `images` without a slash, a Pages-only 404. I fixed the join,
+added a built-output test for the exact public path, and required previews to
+be crawled beneath the repository base. First public CI then found a second
+deployment-specific failure: two DCCEEW links were live but unreachable from
+the runner. Instead of skipping validation, I replaced them with directly
+supporting DarkSky/IES and NPS sources that the runner could verify. The roster
+held 21 tests and the base-path crawl passed
+([`90adcca`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/90adcca),
+[`55c5b33`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-xty116/commit/55c5b33)).
